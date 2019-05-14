@@ -136,7 +136,7 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	case "linux":
 		cgoLdflags = fmt.Sprintf("-L%s", engineCachePath)
 	case "windows":
-		cgoLdflags = fmt.Sprintf("-L%s -H=windowsgui", engineCachePath)
+		cgoLdflags = fmt.Sprintf("-L%s", engineCachePath)
 	default:
 		fmt.Printf("Target platform %s is not supported, cgo_ldflags not implemented.\n", targetOS)
 		os.Exit(1)
@@ -179,7 +179,7 @@ func build(projectName string, targetOS string, vmArguments []string) {
 
 	cmdGoBuild := exec.Command(goBin, "build",
 		"-o", outputBinaryPath,
-		fmt.Sprintf("-ldflags=-X main.vmArguments=%s", strings.Join(vmArguments, ";")),
+		fmt.Sprintf("-ldflags=-X -H=windowsgui main.vmArguments=%s", strings.Join(vmArguments, ";")),
 		dotSlash+"cmd",
 	)
 	cmdGoBuild.Dir = filepath.Join(wd, "desktop")
