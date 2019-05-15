@@ -177,9 +177,10 @@ func build(projectName string, targetOS string, vmArguments []string) {
 		os.Exit(1)
 	}
 
+	fmt.Println("BUILDING!!!!")
 	cmdGoBuild := exec.Command(goBin, "build",
 		"-o", outputBinaryPath,
-		fmt.Sprintf("-ldflags -H windowsgui -w main.vmArguments=%s", strings.Join(vmArguments, ";")),
+		fmt.Sprintf("-ldflags -H=windowsgui main.vmArguments=%s", strings.Join(vmArguments, ";")),
 	)
 	cmdGoBuild.Dir = filepath.Join(wd, "desktop")
 	cmdGoBuild.Env = append(os.Environ(),
